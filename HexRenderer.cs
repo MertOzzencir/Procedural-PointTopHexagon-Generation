@@ -18,54 +18,55 @@ public class HexRenderer : MonoBehaviour
         mFilter = GetComponent<MeshFilter>();
     }
 
-    public void SetVerticesAndTriangles(Vector3 center, int hexCount, float outerSize,float innerRadius,float height)
+    public void SetVerticesAndTriangles(Vector3 center, int hexCount, float outerSize, float innerRadius, float height)
     {
+        int currentHexIndex = 24 * hexCount;
         for (int edgeIndex = 0; edgeIndex < 6; edgeIndex++)
         {
             FindPoints(innerRadius, outerSize, edgeIndex, height / 2, center);
             FindPoints(innerRadius, outerSize, edgeIndex, center.y, center);
         }
 
-        for (int faceCount = 0 + hexCount * 24; faceCount <= 20 + hexCount * 24; faceCount += 4)
+        for (int faceCount = 0 + currentHexIndex; faceCount <= 20 + currentHexIndex; faceCount += 4)
         {
-            if (faceCount == 20 + 24 * hexCount)
+            if (faceCount == 20 + currentHexIndex)
             {
                 #region Üst Yüzey
                 triangles.Add(faceCount);
-                triangles.Add(1 + 24 * hexCount);
+                triangles.Add(1 + currentHexIndex);
                 triangles.Add(faceCount + 1);
 
                 triangles.Add(faceCount);
-                triangles.Add(0 + 24 * hexCount);
-                triangles.Add(1 + 24 * hexCount);
+                triangles.Add(0 + currentHexIndex);
+                triangles.Add(1 + currentHexIndex);
                 #endregion
 
                 #region Alt Yüzey
                 triangles.Add(faceCount + 2);
                 triangles.Add(faceCount + 3);
-                triangles.Add(3 + 24 * hexCount);
+                triangles.Add(3 + currentHexIndex);
 
                 triangles.Add(faceCount + 2);
-                triangles.Add(3 + 24 * hexCount);
-                triangles.Add(2 + 24 * hexCount);
+                triangles.Add(3 + currentHexIndex);
+                triangles.Add(2 + currentHexIndex);
                 #endregion
                 #region Diş kenar
                 triangles.Add(faceCount + 1);
-                triangles.Add(1 + 24 * hexCount);
-                triangles.Add(3 + 24 * hexCount);
+                triangles.Add(1 + currentHexIndex);
+                triangles.Add(3 + currentHexIndex);
 
                 triangles.Add(faceCount + 1);
-                triangles.Add(3 + 24 * hexCount);
+                triangles.Add(3 + currentHexIndex);
                 triangles.Add(faceCount + 3);
                 #endregion
                 #region İç kenar
                 triangles.Add(faceCount);
-                triangles.Add(2 + hexCount * 24);
-                triangles.Add(0 + 24 * hexCount);
+                triangles.Add(2 + currentHexIndex);
+                triangles.Add(0 + currentHexIndex);
 
                 triangles.Add(faceCount);
                 triangles.Add(faceCount + 2);
-                triangles.Add(2 + hexCount * 24);
+                triangles.Add(2 + currentHexIndex);
                 #endregion
 
                 break;
